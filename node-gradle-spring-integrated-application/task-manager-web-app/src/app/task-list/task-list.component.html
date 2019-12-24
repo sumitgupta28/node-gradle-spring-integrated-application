@@ -1,0 +1,88 @@
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <h2>Task List</h2>
+    </div>
+      <table class="table table-striped">
+          <tbody>
+              <tr>
+                <td colspan="2">
+                    <div class="form-group">
+                        <label for="name">Task Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="searchByTaskName">
+                      </div>
+                </td>
+                <td colspan="2">
+                    <div class="form-group">
+                        <label for="name">Parent Task Name </label>
+                        <input type="text" class="form-control" [(ngModel)]="searchByPTaskName">
+                      </div>
+                </td>
+              </tr>
+              <tr>
+                  <td>                    
+                    <div class="form-group">
+                      <label for="name">Priority From </label>
+                      <input type="text" class="form-control" [(ngModel)]="searchByPriorityFrom">
+                    </div>
+                  </td>
+                  <td>                    
+                      <div class="form-group">
+                        <label for="name">Priority To </label>
+                        <input type="text" class="form-control" [(ngModel)]="searchByPriorityTo">
+                      </div>
+                  </td>
+                  <td>
+                      <div class="form-group">
+                          <label for="name">Start Date </label>
+                          <input type="date" class="form-control" [(ngModel)]="searchByStartDate">
+                        </div>
+                  </td>
+                  <td>
+                  <div class="form-group">
+                          <label for="name">StarEnd Date </label>
+                          <input type="date" class="form-control" [(ngModel)]="searchByEndDate">
+                        </div>
+                  </td>
+    
+              </tr> 
+      </table> 
+    <div class="panel-body">
+    <div *ngFor="let task of tasks | async | taskFilter:searchByTaskName:searchByPTaskName:searchByPriorityFrom:searchByPriorityTo:searchByStartDate:searchByEndDate">
+          <table class="table table-striped" style="width:100%">
+            <thead>
+              <tr>
+                <th style="width:20%">Task</th>
+                <th style="width:20%">Parent</th>
+                <th style="width:10%">Priority</th>
+                <th style="width:10%">Start Date</th>
+                <th style="width:10%">End Date</th>
+                <!--<th>Task Status</th>-->
+                <th style="width:30%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{task.task}}</td>
+                <td>{{task.parentTask}}</td>
+                <td>{{task.priority}}</td>
+                <td>{{task.startDate}}</td>
+                <td>{{task.endDate}}</td>
+                <td>
+                <table> 
+                  <tr *ngIf= "task.taskStatus =='IN_PROGRESS'">
+                        <td><button (click)="completeTask(task.taskId)" class="btn btn-info btn-sm" style="margin-left: 10px">Complete Task</button></td>
+                        <td><button (click)="taskUpdate(task.taskId)" class="btn btn-info btn-sm" style="margin-left: 10px">&nbsp;&nbsp;&nbsp;Edit Task&nbsp;&nbsp;&nbsp;</button></td>
+                  </tr>
+                  <tr>
+                        <td><button (click)="deleteTask(task.taskId)" class="btn btn-info btn-sm" style="margin-left: 10px">&nbsp;&nbsp;Delete Task&nbsp;&nbsp;&nbsp;</button></td>
+                         <td><button (click)="taskDetails(task.taskId)" class="btn btn-info btn-sm" style="margin-left: 10px">&nbsp;&nbsp;&nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;&nbsp;</button></td>
+                 </tr>
+                </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>

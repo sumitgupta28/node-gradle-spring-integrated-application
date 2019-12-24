@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background:gray;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background:gray;
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+<h3>Create Task</h3>
+<div [hidden]="submitted" style="width: 400px;">
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Task</label>
+      <input type="text" class="form-control" id="task" required [(ngModel)]="task.task" name="task">
+    </div>
+
+    <div class="form-group">
+    <div class="slidecontainer">
+        <label for="name">Priority</label><br>
+        0<span style="padding-left:370px;">30</span>
+        <input type="range" min="5" max="30" step="1" class="slider" border-radius="5x" id="priority" required [(ngModel)]="task.priority" name="priority"/>
+        <br> Value - {{task.priority}}
+      </div>    
+    </div>
+
+    <div class="form-group">
+        <label for="name">Parent Task</label>
+        <select class="form-control" id="parentTaskId" [(ngModel)]="task.parentTaskId" name="task.parentTaskId">
+          <option selected>Select Parent Task</option>
+          <option *ngFor="let task of tasks | async" [value]="task.taskId">{{task.task}}</option>
+        </select>
+      </div>
+
+    <div class="form-group">
+        <label for="name">Start Date</label>
+        <input type="date" class="form-control" id="startDate" required [(ngModel)]="task.startDate" name="startDate">
+    </div>
+
+    <div class="form-group">
+        <label for="name">End Date</label>
+        <input type="date" class="form-control" id="endDate" required [(ngModel)]="task.endDate" name="endDate">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="reset" class="btn btn-success" style="margin-left: 10px">Reset</button>
+    </div>
+    
+    
+
+</form>
+</div>
+
+<div [hidden]="!submitted">
+  <h4>You submitted successfully!</h4>
+</div>

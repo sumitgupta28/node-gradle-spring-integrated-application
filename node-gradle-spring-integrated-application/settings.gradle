@@ -1,0 +1,5 @@
+rootProject.name = "node-gradle-spring-integrated-application"
+
+include 'task-manager-service','task-manager-web-app'
+
+
